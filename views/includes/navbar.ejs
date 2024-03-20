@@ -1,0 +1,48 @@
+<style>
+  .search-conatainer{
+    margin-right: 10%;
+  }
+  .search-conatainer input{
+    border-radius: 20px;
+    padding: 2px 20px;
+  }
+  .btn-search{
+    border-radius: 20px;
+    padding: 2px 20px;
+  }
+  .btn-search:hover{
+    background-color: #fe424d;
+    color: white;
+  }
+</style>
+
+<nav class="navbar navbar-expand-md bg-body-tertiary border-bottom sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/listing"><i class="fa-solid fa-compass"></i></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link" href="/listing"><i class="fa-solid fa-magnifying-glass" ></i> EXPLORE</a>
+          <a class="nav-link" href="/listing/new"> <i class="fa-solid fa-circle-plus"></i> ADD NEW </a>
+        </div>  
+        <div class="navbar-nav ms-auto search-conatainer">
+          <form class="d-flex " role="search">
+            <input class="form-control me-2" type="search" placeholder="Search destinations.." aria-label="Search">
+            <button class="btn btn-search border" type="submit">Search</button>
+          </form>
+        </div>
+          <div class="navbar-nav ms-auto m-4">
+            <% if (currentUser) {%>
+                <a href="/logout"><button type="button" class="btn btn-dark btn-sm mt-2 generate-btn "><b> LOG OUT</b></button></a>
+              <% } %>
+            <% if (!currentUser) {%>
+              <a href="/login"><button type="button" class="btn btn-dark btn-sm mt-2 generate-btn"><b>LOG IN</b></button></a>
+            <% } %>
+          </div>
+          <!-- <a class="nav-link " aria-disabled="true">Disabled</a> -->
+        
+      </div>
+    </div>
+  </nav>

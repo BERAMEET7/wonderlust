@@ -1,0 +1,141 @@
+/* body{
+    background-color: black !important;
+    color: white !important;
+} */
+.container{
+    min-height: 95vh !important;
+}
+.new-container{
+    
+    background-color: #fe424d !important;
+}
+
+/* navbar */
+.navbar{
+    height: 5rem;
+    background-color: rgba(var(--bs-tertiary-bg-rgb), var(--bs-bg-opacity)) !important;
+}
+.fa-compass{
+    color: #fe424d;
+    font-size: 2rem;
+}
+.nav-link{
+    color: #212121 !important;
+    background-color: rgba(var(--bs-tertiary-bg-rgb), var(--bs-bg-opacity)) !important;
+}
+.nav-link:hover{
+    color: #fe424d !important;
+}
+/* footer */
+.f-info-links a{
+    text-decoration: none;
+    color: #212121;
+}
+
+.f-info-links a:hover{
+    text-decoration: underline;
+    color: #fe424d;
+}
+.f-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+    background-color: rgb(219, 218, 218);
+    padding: 2vh;
+    gap: 1vh;
+}
+.f-info-socials{
+    display: flex;
+    gap: 20px;
+}
+.f-info-socials i{
+    font-size: 1.2rem;
+}
+.f-info-socials i:hover{
+    color: #fe424d;
+}
+
+
+/* crads */
+.card{
+    border: none !important ;
+}
+.card-img-top{
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    height: 20rem !important;
+}
+.card-body{
+    padding: 0 !important;
+    font-family: poppins !important;
+    
+}
+.listing-link{
+    text-decoration: none !important;
+    margin-bottom: 2rem !important;
+}
+.card-img-overlay{
+    opacity: 0;
+    padding: 7rem 0 0 0;
+    font-size: 2rem;
+    font-weight:bolder;
+    text-align: center;
+    transition: all 0.3s ease-in;
+    height: 20rem;
+}
+.card-img-overlay:hover{
+    opacity: 1;
+    text-align: center;
+    padding: 7rem 0 0 0 ;
+    color: #fe424d;
+    background: #21212170;
+    height: 20rem;
+    border-radius: 1rem;
+}
+/* new page */
+.generate-btn{
+    background-color: #2b2b2b !important;
+    color: white !important;
+    border: none !important;
+    width: 100%;
+}
+.generate-btn:hover{
+    background-color: #fe424d !important;
+}
+.update-delete{
+    width: 45%;
+}
+.btn-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* utility classes */
+.tac{
+    text-align: center !important;
+}
+.jcc{
+    justify-content: center !important;
+}
+.wfc{
+    width: max-content !important;
+}
+.err-page{
+    height: 100%;
+    width: 100%;
+}
+.err-constainer img{
+    max-width: 100vw !important;
+}
+
+
+/* map */
+#map{
+    height: 400px;
+    width: 55vw;
+    max-width: 850px;
+}
+

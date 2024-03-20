@@ -1,0 +1,28 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="row">
+    <div class="col-6 offset-3">
+        <h3 class="tac border-bottom mt-3"><b>SIGN-UP</b></h3>
+        <form method="post" action="/signup" novalidate class="mt-3 border p-2 mb-3 needs-validation" >
+            <div class="mb-3">
+                <label for="username" class="form-label"><i class="fa-solid fa-user m-1" style="color: #fe424d;"></i> Username</label>
+                <input type="text" placeholder="e.g -  johndoe25 " name="username" class="form-control" required>
+                <div class="invalid-feedback">usernmae is Required</div>
+                <div class="valid-feedback">Looks good</div>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label"><i class="fa-solid fa-envelope m-1" style="color: #fe424d;"></i> E-mail</label>
+                <input type="email" placeholder="e.g - johndoe23@gmail.com" name="email" class="form-control" required>
+                <div class="invalid-feedback">email is Required</div>
+                <div class="valid-feedback">Looks good</div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label"><i class="fa-solid fa-lock m-1" style="color: #fe424d;"></i> Password</label>
+                <input type="password" placeholder="enter strong password" name="password" class="form-control" required></input>
+                <div class="invalid-feedback">password is Required</div>
+                <div class="valid-feedback">Looks good</div>
+            </div>
+            <button type="submit" class="btn btn-dark mt-2 generate-btn">SUBMIT</button>
+        </form>
+    </div>
+    </div>    

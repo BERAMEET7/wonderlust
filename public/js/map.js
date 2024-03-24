@@ -1,5 +1,9 @@
+if (process.env.NODE_ENV != "production") {
+    require("dotenv").config();
+};
+
 // let mapToken = "<%= process.env.MAP_TOKEN %>"
-mapboxgl.accessToken = mapToken;
+mapboxgl.accessToken = process.env.MAP_TOKEN;
 
 
 

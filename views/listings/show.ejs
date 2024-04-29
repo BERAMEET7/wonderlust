@@ -1,10 +1,10 @@
 <% layout("/layouts/boilerplate") %>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        const mapToken = '<%= process.env.MAP_TOKEN %>';
+      
         const map_location = "<%= listing.location %>";
 
-        mapboxgl.accessToken = mapToken;
+        mapboxgl.accessToken = '<%= process.env.MAP_TOKEN %>';
 
         const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${map_location}.json?access_token=${mapboxgl.accessToken}`;
         

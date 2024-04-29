@@ -1,6 +1,6 @@
 
 // let mapToken = "<%= process.env.MAP_TOKEN %>"
-mapboxgl.accessToken = mapToken;
+mapboxgl.accessToken = 'pk.eyJ1IjoiYmVyYW1lZXQ3IiwiYSI6ImNsdHd0YmptOTAzMDIybXJ1NWY3aG55cDYifQ.pmEN3xZSj0bkJ5yqxZA89w';
 
 
 

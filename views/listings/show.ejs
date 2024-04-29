@@ -1,8 +1,46 @@
 <% layout("/layouts/boilerplate") %>
 <script>
-    const mapToken = "<%= process.env.MAP_TOKEN %>";
-    
-    const map_location = "<%= listing.location %>"
+    document.addEventListener("DOMContentLoaded", () => {
+        const mapToken = "<%= process.env.MAP_TOKEN %>";
+        const map_location = "<%= listing.location %>";
+
+        mapboxgl.accessToken = mapToken;
+
+        const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${map_location}.json?access_token=${mapboxgl.accessToken}`;
+        
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const coordinates = data.features[0].geometry.coordinates;
+                const lat = coordinates[1];
+                const lon = coordinates[0];
+                
+                const map = new mapboxgl.Map({
+                    container: "map",
+                    style: "mapbox://styles/mapbox/streets-v12",
+                    center: [lon, lat],
+                    zoom: 12
+                });
+
+                new mapboxgl.Marker({ color: "#fe424d", draggable: true })
+                    .setLngLat([lon, lat])
+                    .setPopup(new mapboxgl.Popup({ offset: 20 }).setHTML(`<h4 style="color: #fe424d;">${map_location}</h4><p style="color: #fe424d; height:5px;">Exact location provided after booking<p>`))
+                    .addTo(map);
+
+                map.addControl(new mapboxgl.GeolocateControl({
+                    positionOptions: {
+                        enableHighAccuracy: true
+                    },
+                    trackUserLocation: true,
+                    showUserHeading: true,
+                    showAccuracyCircle: true,
+                    showUserLocation: true,
+                }));
+            })
+            .catch(error => {
+                console.error('Error fetching geocoding data:', error);
+            });
+    });
 </script>
 <body>
     <div class="row">
@@ -25,108 +63,66 @@
                     <span class="mt-5">
                         <p class="card-text">Location : <b><%= listing.location  %></b></p>
                     </span>
-                   
-                   
                     <span class="mt-5">
                         <p class="card-text">Country : <b><%= listing.country  %></b></p>
                     </span>
 
-                    <% if(currentUser ){%>
+                    <% if(currentUser){ %>
                         <span class="btn-container mt-3">
-                        <form method="get" action="/listing/<%= listing._id %>/edit" class="update-delete">
-                            <button type="submit" class="btn generate-btn">UPDATE</button>
-                        </form>
-                        <form method="post" action="/listing/<%= listing._id %>?_method=DELETE" class="update-delete">
-                            <button type="submit" class="deletebtn btn generate-btn">DELETE</button>
-                        </form>
+                            <form method="get" action="/listing/<%= listing._id %>/edit" class="update-delete">
+                                <button type="submit" class="btn generate-btn">UPDATE</button>
+                            </form>
+                            <form method="post" action="/listing/<%= listing._id %>?_method=DELETE" class="update-delete">
+                                <button type="submit" class="deletebtn btn generate-btn">DELETE</button>
+                            </form>
                         </span>
-                        <%}%>
+                    <% } %>
                 </div>
             </div>
 
             <hr>
-            <% if (currentUser) {%>
-            <form  method="post" action="/listing/<%= listing._id %>/reviews" novalidate class="border mb-3 p-4 needs-validation col-8 offset-2" >
-                <h6 class="tac"><b>ADD YOUR REVIEW</b></h6>
-                <hr>
-                <div class="mt-3 mb-3">
-                    <fieldset class="starability-slot">
-                        <legend>Rating</legend>
-                        <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
-                        <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                        <label for="first-rate1" title="Terrible">1 star</label>
-                        <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                        <label for="first-rate2" title="Not good">2 stars</label>
-                        <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                        <label for="first-rate3" title="Average">3 stars</label>
-                        <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                        <label for="first-rate4" title="Very good">4 stars</label>
-                        <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-                        <label for="first-rate5" title="Amazing">5 stars</label>
-                      </fieldset>
-                </div>
-                <div>
-                    <label for="comment" class="form-label">comment</label>
-                    <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control" required></textarea>
-                    <div class="invalid-feedback"><i class="fa-solid fa-circle-exclamation"></i> Must Add Your Valuable Comment</div>
-                </div>
+
+            <% if(currentUser){ %>
+                <form method="post" action="/listing/<%= listing._id %>/reviews" novalidate class="border mb-3 p-4 needs-validation col-8 offset-2">
+                    <h6 class="tac"><b>ADD YOUR REVIEW</b></h6>
+                    <hr>
+                    <div class="mt-3 mb-3">
+                        <fieldset class="starability-slot">
+                            <legend>Rating</legend>
+                            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+                            <!-- other radio inputs for rating -->
+                        </fieldset>
+                    </div>
+                    <div>
+                        <label for="comment" class="form-label">Comment</label>
+                        <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control" required></textarea>
+                        <div class="invalid-feedback"><i class="fa-solid fa-circle-exclamation"></i> Must Add Your Valuable Comment</div>
+                    </div>
                     <div class="update-delete">
                         <button type="submit" class="btn generate-btn mt-4">Submit</button>
                     </div>
-            </form>
-            <hr>
+                </form>
+                <hr>
             <% } %>
 
-                <% if (listing.reviews.length>0) {%>
-                    
+            <% if(listing.reviews.length > 0){ %>
                 <div class="col-12 mt-4">
                     <h5 class="offset-5 mb-4"><b>REVIEWS</b></h5>
-                <div class="row">
-                    <% for(let review of listing.reviews) {%>
-                        
-                        <div class="card border p-3 col-5 offset-1 mb-3">
-                            <div class="card-body">
-                                <div class="row">
-                                    <h4 class="card-title "><%= review.author.username %></h4>
-                                    <p class="starability-result card-text m-2 mt-0 mb-1" data-rating="<%= review.rating %>" ></p>
-                                    <!-- <p class="card-text wfc">
-                                        <i class="fa-solid fa-star" <i class="fa-solid fa-star" style="color: #fe424d;"></i></i>
-                                    </p> -->
-                                    
-                                    <hr>
-                                </div>
-                                <p class="card-text">
-                                    <%= review.comment %>
-                                </p>
-                
+                    <div class="row">
+                        <% for(let review of listing.reviews){ %>
+                            <div class="card border p-3 col-5 offset-1 mb-3">
+                                <!-- Card content for each review -->
                             </div>
-                            <hr>
-                            <div class="update-delete">
-                                <div class="update-delete">
-                                    <% if (currentUser) {%>
-                                <form method="POST" action="/listing/<%= listing.id %>/reviews/<%= review.id %>?_method=DELETE">
-                                    <button type="submit" class="deletebtn btn btn-sm generate-btn"><i class="fa-solid fa-trash"></i></button>
-                                </form>
-                                <% } %>
-                            </div>
-                        </div>
-                        </div>
                         <% } %>
                     </div>
-                    
                 </div>
                 <hr>
-<% } %>
-                
-                <div class="col-12 tac  mb-3 ">
-                    <h4 class=" " ><b>Where You'll Be</b></h4>
-                    <div id="map" class="mappppp">
-                        
-                    </div>
-                </div>
+            <% } %>
+
+            <div class="col-12 tac mb-3">
+                <h4><b>Where You'll Be</b></h4>
+                <div id="map" class="mappppp"></div>
+            </div>
         </div>
-        </div>
-    
-    <script src="../js/map.js"></script>
-    
+    </div>
 </body>

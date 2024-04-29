@@ -1,13 +1,10 @@
-if (process.env.NODE_ENV != "production") {
-    require("dotenv").config();
-};
 
 // let mapToken = "<%= process.env.MAP_TOKEN %>"
-mapboxgl.accessToken = process.env.MAP_TOKEN;
+mapboxgl.accessToken = mapToken;
 
 
 
-var url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${map_location}.json?access_token=${mapToken}`;
+var url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${map_location}.json?access_token=${mapboxgl.accessToken}`;
 fetch(url)
     .then(response => response.json())
     .then(data => {
@@ -19,7 +16,7 @@ fetch(url)
         const map = new mapboxgl.Map({
             container: "map",
             style: "mapbox://styles/mapbox/streets-v12",
-            center: [lon, lat],
+            center: [lon , lat],
             zoom: 12
         });
 
